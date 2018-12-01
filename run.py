@@ -5,8 +5,8 @@ from flask import Flask, render_template, request
 import config
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('FLASK_KEY')
-config.create_requirements()
+app.secret_key = config.flask_key
+
 
 class MyLogger(object):
     def debug(self, msg):
@@ -51,4 +51,5 @@ def download():
 
 
 if __name__ == '__main__':
-    app.run(host=config.url, port=config.port, debug=config.debug)
+	os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), config.download_folder), exist_ok=True)
+	app.run(host=config.url, port=config.port, debug=config.debug)
