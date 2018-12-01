@@ -2,10 +2,11 @@ from __future__ import unicode_literals
 import os
 import youtube_dl
 from flask import Flask, render_template, request
+import config
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
-
+config.create_requirements()
 
 class MyLogger(object):
     def debug(self, msg):
@@ -38,7 +39,7 @@ def download():
                 'preferredcodec': 'mp3',
                 'preferredquality': '192',
             }],
-            'outtmpl': '/home/lildogzsixpack/%(title)s-%(id)s.%(ext)s',
+			'outtmpl': os.path.join(config.download_folder, "%(title)s-%(id)s.%(ext)s"),
             'logger': MyLogger(),
             'progress_hooks': [my_hook],
         }
@@ -50,4 +51,4 @@ def download():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host=config.url, port=config.port, debug=config.debug)
