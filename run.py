@@ -52,4 +52,4 @@ def download():
 
 if __name__ == '__main__':
 	os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), config.download_folder), exist_ok=True)
-	app.run(host=config.url, port=config.port, debug=config.debug)
+	app.run(host=config.host, port=config.port, debug=config.debug)
